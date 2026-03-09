@@ -1,18 +1,17 @@
 import ExploreBtn from "@/components/ExploreBtn";
 import EventCard from "@/components/EventCard";
-import { events } from "@/lib/constants";
+import { IEvent } from "@/database";
+import connectDB from "@/lib/mongodb";
+import Event from "@/database/event.model";
 
+const Page = async () => {
+    await connectDB();
+    const events = await Event.find().sort({ createdAt: -1 }).lean();
 
-const Page = () => {
     return (
         <section>
-            <h1 className="text-center">
-                The Hub for every Dev <br /> Event you can't Miss
-            </h1>
-
-            <p className="text-center mt-5">
-                Hackathons, Meetups, and Conferences, All in One Place
-            </p>
+            <h1 className="text-center">The Hub for Every Dev <br /> Event You Can't Miss</h1>
+            <p className="text-center mt-5">Hackathons, Meetups, and Conferences, All in One Place</p>
 
             <ExploreBtn />
 
@@ -20,15 +19,15 @@ const Page = () => {
                 <h3>Featured Events</h3>
 
                 <ul className="events">
-                    {events.map((event) => (
-                        <li key={event.title}>
+                    {events && events.length > 0 && events.map((event: IEvent) => (
+                        <li key={String(event._id)} className="list-none">
                             <EventCard {...event} />
                         </li>
                     ))}
                 </ul>
             </div>
         </section>
-    );
-};
+    )
+}
 
 export default Page;
