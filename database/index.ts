@@ -1,9 +1,7 @@
-// Central export file for all database models
-// Allows importing models from a single entry point: import { Event, Booking } from '@/database'
-
+// Database models exports
 export { default as Event } from './event.model';
 export { default as Booking } from './booking.model';
 
-// Re-export TypeScript interfaces for use throughout the application
+// TypeScript interfaces exports
 export type { IEvent } from './event.model';
 export type { IBooking } from './booking.model';
